@@ -1,12 +1,30 @@
-$(document).on(onReady);
+$(document).ready(onReady);
+
+const currentEmployees = [];
+
+
 function onReady(){
-    continue;
+    console.log('jq')
+    $('#addEmployeeButton').on('click', addEmployee)
 };
 
 
-
+function addEmployee(){
+    currentEmployees.push(getEmployeeInfo());
+}
 
 //create submit button that collects into an object. store that object in an array.
+
+
+function getEmployeeInfo(){
+    const employee = {
+        firstName: $('#empFirstName').val(),
+        lastName: $('#empLastName').val(),
+        id: $('#empID').val(),
+        title: $('#empTitle').val(),
+        salary: $('#empSalary').val(),
+    }
+}
 
 //append employee info to the DOM
 
