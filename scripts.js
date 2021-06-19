@@ -5,21 +5,20 @@ const currentEmployees = [];
 
 function onReady(){
     console.log('jq')
-    $('#addEmployeeButton').on('click', addEmployee)
-};
-
+    $('#addEmployeeButton').on('click', addEmployee);
+}
 
 function addEmployee(){
     getEmployeeInfo();
     clearTextInputs();
     displayEmployees();
     displayMonthlySalary();
+    deleteButtonListener();
 
     //Test console.log - delete
     console.log(currentEmployees);
 }
 
-//create submit button that collects into an object. store that object in an array.
 
 function clearTextInputs(){
     $('#empFirstName').val('');
@@ -27,6 +26,29 @@ function clearTextInputs(){
     $('#empID').val('');
     $('#empTitle').val('');
     $('#empSalary').val('');
+}
+
+function displayEmployees(){
+    const tableDisplay = $('.table');
+    const employeeCount = currentEmployees.length
+    const employee = currentEmployees[employeeCount-1];
+    tableDisplay.append(`<tr id="emp${employeeCount}">
+                            <td>${employee.firstName}</td>
+                            <td>${employee.lastName}</td>
+                            <td>${employee.id}</td>
+                            <td>${employee.title}</td>
+                            <td>$${employee.salary.toLocaleString()}</td>
+                            <td><button class="deleteEmployeeButton">Delete</button></td>
+                        </tr>`)
+}
+
+function displayMonthlySalary(){
+    const totalSalary = monthlySalaryCalc(currentEmployees)
+    $('#monthlySalaryCost').empty();
+    $('#monthlySalaryCost').append(`$${totalSalary.toLocaleString()}`)
+    if (totalSalary > 20000){
+        $('#totalSalaryDiv').css('background-color', 'red');
+    }
 }
 
 function getEmployeeInfo(){
@@ -40,26 +62,6 @@ function getEmployeeInfo(){
     currentEmployees.push(employee);
 }
 
-//append employee info to the DOM
-
-function displayEmployees(){
-    const tableDisplay = $('.table');
-    const employeeCount = currentEmployees.length
-    const employee = currentEmployees[employeeCount-1];
-    tableDisplay.append(`<tr id="emp${employeeCount}">
-                            <td>${employee.firstName}</td>
-                            <td>${employee.lastName}</td>
-                            <td>${employee.id}</td>
-                            <td>${employee.title}</td>
-                            <td>$${employee.salary.toLocaleString()}</td>
-                            <td><button class="emp${employeeCount}">Delete</button></td>
-                        </tr>`)
-}
-
-//from the info gathered - determine monthly costs - append to the DOM
-    // if cost exceeds $20K, signal with red element background
-
-
 function monthlySalaryCalc(objectArray){
     let monthlySalaryCost = 0;    
     for (const employee of objectArray){
@@ -69,16 +71,17 @@ function monthlySalaryCalc(objectArray){
     return monthlySalaryCost
 }
 
-function displayMonthlySalary(){
-    const totalSalary = monthlySalaryCalc(currentEmployees)
-    $('#monthlySalaryCost').empty();
-    $('#monthlySalaryCost').append(`$${totalSalary.toLocaleString()}`)
-    if (totalSalary > 20000){
-        $('#totalSalaryDiv').css('color', 'red');
-    }
+function deleteButtonListener(){
+    $('.deleteEmployeeButton').on('click', function(){
+        $(this).parent().parent().remove();
+    });
 }
 
+
 //Create a delete button that deletes employee from the DOM.
+
+
+
     // Remove employee's salary from the reported total.
 
 // Update salaries account so that the deleted employee no longer counts against cost.
