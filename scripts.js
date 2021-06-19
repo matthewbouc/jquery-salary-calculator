@@ -13,7 +13,7 @@ function addEmployee(){
     getEmployeeInfo();
     clearTextInputs();
     displayEmployees();
-
+    displayMonthlySalary();
 
     //Test console.log - delete
     console.log(currentEmployees);
@@ -35,10 +35,9 @@ function getEmployeeInfo(){
         lastName: $('#empLastName').val(),
         id: $('#empID').val(),
         title: $('#empTitle').val(),
-        salary: $('#empSalary').val(),
+        salary: Number($('#empSalary').val()),
     }
     currentEmployees.push(employee);
-    return true
 }
 
 //append employee info to the DOM
@@ -52,13 +51,32 @@ function displayEmployees(){
                             <td>${employee.lastName}</td>
                             <td>${employee.id}</td>
                             <td>${employee.title}</td>
-                            <td>${employee.salary}</td>
+                            <td>$${employee.salary.toLocaleString()}</td>
                             <td><button class="emp${employeeCount}">Delete</button></td>
                         </tr>`)
 }
 
 //from the info gathered - determine monthly costs - append to the DOM
     // if cost exceeds $20K, signal with red element background
+
+
+function monthlySalaryCalc(objectArray){
+    let monthlySalaryCost = 0;    
+    for (const employee of objectArray){
+        const empMonthlyCost = employee.salary/12;
+        monthlySalaryCost += empMonthlyCost;
+    }
+    return monthlySalaryCost
+}
+
+function displayMonthlySalary(){
+    const totalSalary = monthlySalaryCalc(currentEmployees)
+    $('#monthlySalaryCost').empty();
+    $('#monthlySalaryCost').append(`$${totalSalary.toLocaleString()}`)
+    if (totalSalary > 20000){
+        $('#totalSalaryDiv').css('color', 'red');
+    }
+}
 
 //Create a delete button that deletes employee from the DOM.
     // Remove employee's salary from the reported total.
