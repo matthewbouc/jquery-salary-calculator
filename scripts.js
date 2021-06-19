@@ -10,11 +10,24 @@ function onReady(){
 
 
 function addEmployee(){
-    currentEmployees.push(getEmployeeInfo());
+    getEmployeeInfo();
+    clearTextInputs();
+    displayEmployees();
+
+
+    //Test console.log - delete
+    console.log(currentEmployees);
 }
 
 //create submit button that collects into an object. store that object in an array.
 
+function clearTextInputs(){
+    $('#empFirstName').val('');
+    $('#empLastName').val('');
+    $('#empID').val('');
+    $('#empTitle').val('');
+    $('#empSalary').val('');
+}
 
 function getEmployeeInfo(){
     const employee = {
@@ -24,9 +37,25 @@ function getEmployeeInfo(){
         title: $('#empTitle').val(),
         salary: $('#empSalary').val(),
     }
+    currentEmployees.push(employee);
+    return true
 }
 
 //append employee info to the DOM
+
+function displayEmployees(){
+    const tableDisplay = $('.table');
+    const employeeCount = currentEmployees.length
+    const employee = currentEmployees[employeeCount-1];
+    tableDisplay.append(`<tr id="emp${employeeCount}">
+                            <td>${employee.firstName}</td>
+                            <td>${employee.lastName}</td>
+                            <td>${employee.id}</td>
+                            <td>${employee.title}</td>
+                            <td>${employee.salary}</td>
+                            <td><button class="emp${employeeCount}">Delete</button></td>
+                        </tr>`)
+}
 
 //from the info gathered - determine monthly costs - append to the DOM
     // if cost exceeds $20K, signal with red element background
