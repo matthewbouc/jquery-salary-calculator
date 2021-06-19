@@ -8,6 +8,9 @@ function onReady(){
     $('#addEmployeeButton').on('click', addEmployee);
 }
 
+/**
+ * Triggers required functions when an employee is added.
+ */
 function addEmployee(){
     getEmployeeInfo();
     clearTextInputs();
@@ -19,7 +22,9 @@ function addEmployee(){
     console.log(currentEmployees);
 }
 
-
+/**
+ *  Clears the text inputs after information has been entered and collected.
+ * */
 function clearTextInputs(){
     $('#empFirstName').val('');
     $('#empLastName').val('');
@@ -28,6 +33,18 @@ function clearTextInputs(){
     $('#empSalary').val('');
 }
 
+/**
+ * Instantiates the .on('click') delete button listeners any time an employee is added.
+ */
+function deleteButtonListener(){
+    $('.deleteEmployeeButton').on('click', function(){
+        $(this).parent().parent().remove();
+    });
+}
+
+/**
+ * Adds a newly entered employee to the DOM.
+ */
 function displayEmployees(){
     const tableDisplay = $('.table');
     const employeeCount = currentEmployees.length
@@ -42,6 +59,9 @@ function displayEmployees(){
                         </tr>`)
 }
 
+/**
+ * Runs monthlySalaryCalc and updates the DOM. Shows 20k warning.
+ */
 function displayMonthlySalary(){
     const totalSalary = monthlySalaryCalc(currentEmployees)
     $('#monthlySalaryCost').empty();
@@ -51,6 +71,9 @@ function displayMonthlySalary(){
     }
 }
 
+/**
+ * Creates an employee object from the text inputs and adds to currentEmployee array.
+ */
 function getEmployeeInfo(){
     const employee = {
         firstName: $('#empFirstName').val(),
@@ -62,6 +85,10 @@ function getEmployeeInfo(){
     currentEmployees.push(employee);
 }
 
+/**
+ * @param {array} objectArray 
+ * @returns sum monthly salary cost of all employees
+ */
 function monthlySalaryCalc(objectArray){
     let monthlySalaryCost = 0;    
     for (const employee of objectArray){
@@ -71,11 +98,6 @@ function monthlySalaryCalc(objectArray){
     return monthlySalaryCost
 }
 
-function deleteButtonListener(){
-    $('.deleteEmployeeButton').on('click', function(){
-        $(this).parent().parent().remove();
-    });
-}
 
 
 //Create a delete button that deletes employee from the DOM.
