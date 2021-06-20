@@ -2,9 +2,8 @@ $(document).ready(onReady);
 
 const currentEmployees = [];
 
-
 function onReady(){
-    console.log('jq')
+    console.log('jq') // test if ready
     $('#addEmployeeButton').on('click', addEmployee);
 }
 
@@ -12,14 +11,16 @@ function onReady(){
  * Triggers required functions when an employee is added.
  */
 function addEmployee(){
-    getEmployeeInfo();
+    if (getEmployeeInfo()){
     clearTextInputs();
     displayEmployees();
     displayMonthlySalary();
     deleteButton();
-
-    //Test console.log - delete
+    //Test console.log
     console.log(currentEmployees);
+    } else {
+        alert(`All information required to update employee list.`);
+    }
 }
 
 /**
@@ -77,14 +78,24 @@ function displayMonthlySalary(){
  * Creates an employee object from the text inputs and adds to currentEmployee array.
  */
 function getEmployeeInfo(){
-    const employee = {
-        firstName: $('#empFirstName').val(),
-        lastName: $('#empLastName').val(),
-        id: $('#empID').val(),
-        title: $('#empTitle').val(),
-        salary: Number($('#empSalary').val()),
+    const firstNameInput = $('#empFirstName').val()
+    const lastNameInput = $('#empLastName').val()
+    const idInput = $('#empID').val()
+    const titleInput = $('#empTitle').val()
+    const salaryInput = Number($('#empSalary').val())
+    if (!firstNameInput || !lastNameInput || !idInput || !titleInput || !salaryInput){
+        return false
+    } else {
+        const employee = {
+            firstName: firstNameInput,
+            lastName: lastNameInput,
+            id: idInput,
+            title: titleInput,
+            salary: salaryInput,
+        }
+        currentEmployees.push(employee);
     }
-    currentEmployees.push(employee);
+    return true
 }
 
 /**
