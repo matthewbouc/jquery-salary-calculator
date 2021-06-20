@@ -131,7 +131,9 @@ function removeEmployee(employeeIDValue){
     displayMonthlySalary();
 }
 
-
+/**
+ * Runs on delete.
+ */
 function runOnDelete(){
     $('#appendTo').empty();
     $('#appendTo').append(` <div class="modal fade" id="someModal">
