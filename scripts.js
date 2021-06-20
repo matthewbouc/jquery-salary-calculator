@@ -16,7 +16,7 @@ function addEmployee(){
     clearTextInputs();
     displayEmployees();
     displayMonthlySalary();
-    deleteButtonListener();
+    deleteButton();
 
     //Test console.log - delete
     console.log(currentEmployees);
@@ -36,9 +36,11 @@ function clearTextInputs(){
 /**
  * Instantiates the .on('click') delete button listeners any time an employee is added.
  */
-function deleteButtonListener(){
+function deleteButton(){
     $('.deleteEmployeeButton').on('click', function(){
+        const idEmployeeID = $(this).parent().parent().attr('id')
         $(this).parent().parent().remove();
+        removeEmployee(idEmployeeID);
     });
 }
 
@@ -47,9 +49,9 @@ function deleteButtonListener(){
  */
 function displayEmployees(){
     const tableDisplay = $('.table');
-    const employeeCount = currentEmployees.length
-    const employee = currentEmployees[employeeCount-1];
-    tableDisplay.append(`<tr id="emp${employeeCount}">
+    const employeeIndex = currentEmployees.length - 1;
+    const employee = currentEmployees[employeeIndex];
+    tableDisplay.append(`<tr id="${employee.id}">
                             <td>${employee.firstName}</td>
                             <td>${employee.lastName}</td>
                             <td>${employee.id}</td>
@@ -101,7 +103,14 @@ function monthlySalaryCalc(objectArray){
 
 
 //Create a delete button that deletes employee from the DOM.
-
+function removeEmployee(employeeIDValue){
+    for (let i = 0; i < currentEmployees.length; i++){
+        if (currentEmployees[i].id == employeeIDValue){
+            let removedEmployee = currentEmployees.splice(i, 1);
+        }
+    }
+    displayMonthlySalary();
+}
 
 
     // Remove employee's salary from the reported total.
