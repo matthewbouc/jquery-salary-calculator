@@ -16,7 +16,6 @@ function addEmployee(){
     clearTextInputs();
     displayEmployees();
     displayMonthlySalary();
-    deleteButton();
     //Test console.log
     console.log(currentEmployees);
     } else {
@@ -42,6 +41,7 @@ function deleteButton(){
     const idEmployeeID = $(this).attr('id')
     $(this).remove();
     removeEmployee(idEmployeeID);
+    runOnDelete();
 }
 
 /**
@@ -57,7 +57,7 @@ function displayEmployees(){
                             <td>${employee.id}</td>
                             <td>${employee.title}</td>
                             <td>$${employee.salary.toLocaleString()}</td>
-                            <td><button class="deleteEmployeeButton">Delete</button></td>
+                            <td><button class="btn-danger">Delete</button></td>
                         </tr>`)
 }
 
@@ -65,13 +65,18 @@ function displayEmployees(){
  * Runs monthlySalaryCalc() and updates the DOM. Shows 20k warning.
  */
 function displayMonthlySalary(){
-    const totalSalary = monthlySalaryCalc(currentEmployees)
+    const totalSalary = monthlySalaryCalc(currentEmployees);
     $('#monthlySalaryCost').empty();
-    $('#monthlySalaryCost').append(`$${totalSalary.toLocaleString()}`)
+    $('#monthlySalaryCost').append(`${totalSalary.toLocaleString('en-US', {
+        style: "currency",
+        currency: "USD"
+    })}`)
     if (totalSalary > 20000){
-        $('#totalSalaryDiv').css('background-color', 'red');
+        $('#totalSalaryDiv').css('background-color', 'darkred');
+        $('#totalSalaryDiv').css('color', 'white');
     } else {
-        $('#totalSalaryDiv').css('background-color', 'white')
+        $('#totalSalaryDiv').css('background-color', 'white');
+        $('#totalSalaryDiv').css('color', 'black');
     }
 }
 
@@ -124,10 +129,19 @@ function removeEmployee(employeeIDValue){
         }
     }
     displayMonthlySalary();
-    console.log(currentEmployees);
 }
 
 
-// Update the readme.md file
-
-// Extra - Add styling
+function runOnDelete(){
+    $('#appendTo').empty();
+    $('#appendTo').append(` <div class="modal fade" id="someModal">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-body">
+                                            <img src="https://i.ytimg.com/vi/IP-3qhpxfcs/hqdefault.jpg">
+                                        </div>   
+                                    </div>                                                                       
+                                </div>                                          
+                            </div>`);
+    $('#someModal').modal('show');
+}
