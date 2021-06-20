@@ -34,7 +34,7 @@ function clearTextInputs(){
 }
 
 /**
- * Instantiates the .on('click') delete button listeners any time an employee is added.
+ * Instantiates the .on('click') delete button listeners any time an employee is added.  On click, runs removeEmployee() and adjusts DOM.
  */
 function deleteButton(){
     $('.deleteEmployeeButton').on('click', function(){
@@ -62,7 +62,7 @@ function displayEmployees(){
 }
 
 /**
- * Runs monthlySalaryCalc and updates the DOM. Shows 20k warning.
+ * Runs monthlySalaryCalc() and updates the DOM. Shows 20k warning.
  */
 function displayMonthlySalary(){
     const totalSalary = monthlySalaryCalc(currentEmployees)
@@ -88,6 +88,7 @@ function getEmployeeInfo(){
 }
 
 /**
+ * Used within displayMonthlySalary().
  * @param {array} objectArray 
  * @returns sum monthly salary cost of all employees
  */
@@ -100,9 +101,10 @@ function monthlySalaryCalc(objectArray){
     return monthlySalaryCost
 }
 
-
-
-//Create a delete button that deletes employee from the DOM.
+/**
+ * Runs .on('click') of delete button.  Updates salary cost on DOM.
+ * @param {Number} employeeIDValue 
+ */
 function removeEmployee(employeeIDValue){
     for (let i = 0; i < currentEmployees.length; i++){
         if (currentEmployees[i].id == employeeIDValue){
@@ -111,13 +113,6 @@ function removeEmployee(employeeIDValue){
     }
     displayMonthlySalary();
 }
-
-
-    // Remove employee's salary from the reported total.
-
-// Update salaries account so that the deleted employee no longer counts against cost.
-
-
 
 
 // Update the readme.md file
