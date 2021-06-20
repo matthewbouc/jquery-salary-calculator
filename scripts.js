@@ -11,7 +11,7 @@ function onReady(){
  * Triggers required functions when an employee is added.
  */
 function addEmployee(){
-    if (getEmployeeInfo()){
+    if (getEmployeeInfo()){ // if/else alert added in late - could use some cleanup
     clearTextInputs();
     displayEmployees();
     displayMonthlySalary();
