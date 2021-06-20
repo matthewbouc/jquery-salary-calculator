@@ -5,6 +5,7 @@ const currentEmployees = [];
 function onReady(){
     console.log('jq') // test if ready
     $('#addEmployeeButton').on('click', addEmployee);
+    $('.table').on('click', '.employeeRow', deleteButton);
 }
 
 /**
@@ -38,11 +39,9 @@ function clearTextInputs(){
  * Instantiates the .on('click') delete button listeners any time an employee is added.  On click, runs removeEmployee() and adjusts DOM.
  */
 function deleteButton(){
-    $('.deleteEmployeeButton').on('click', function(){
-        const idEmployeeID = $(this).parent().parent().attr('id')
-        $(this).parent().parent().remove();
-        removeEmployee(idEmployeeID);
-    });
+    const idEmployeeID = $(this).attr('id')
+    $(this).remove();
+    removeEmployee(idEmployeeID);
 }
 
 /**
@@ -52,7 +51,7 @@ function displayEmployees(){
     const tableDisplay = $('.table');
     const employeeIndex = currentEmployees.length - 1;
     const employee = currentEmployees[employeeIndex];
-    tableDisplay.append(`<tr id="${employee.id}">
+    tableDisplay.append(`<tr class="employeeRow" id="${employee.id}">
                             <td>${employee.firstName}</td>
                             <td>${employee.lastName}</td>
                             <td>${employee.id}</td>
@@ -71,6 +70,8 @@ function displayMonthlySalary(){
     $('#monthlySalaryCost').append(`$${totalSalary.toLocaleString()}`)
     if (totalSalary > 20000){
         $('#totalSalaryDiv').css('background-color', 'red');
+    } else {
+        $('#totalSalaryDiv').css('background-color', 'white')
     }
 }
 
@@ -123,6 +124,7 @@ function removeEmployee(employeeIDValue){
         }
     }
     displayMonthlySalary();
+    console.log(currentEmployees);
 }
 
 
