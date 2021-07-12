@@ -5,7 +5,7 @@ const currentEmployees = [];
 function onReady(){
     console.log('jq') // test if ready
     $('#addEmployeeButton').on('click', addEmployee);
-    $('.table').on('click', '.employeeRow', deleteButton);
+    $('.table').on('click', '.deleteButton', deleteButton);
 }
 
 /**
@@ -57,7 +57,7 @@ function displayEmployees(){
                             <td>${employee.id}</td>
                             <td>${employee.title}</td>
                             <td>$${employee.salary.toLocaleString()}</td>
-                            <td><button class="btn-danger">Delete</button></td>
+                            <td><button class="btn-danger deleteButton">Delete</button></td>
                         </tr>`)
 }
 
@@ -123,6 +123,9 @@ function monthlySalaryCalc(objectArray){
  * @param {Number} employeeIDValue 
  */
 function removeEmployee(employeeIDValue){
+    // This could also be a filter!!
+    //currentEmployees = currentEmployees.filter(employee => employeeIDValue !== currentEmployees.id)
+        // returns all employees that don't match the employee id value!
     for (let i = 0; i < currentEmployees.length; i++){
         if (currentEmployees[i].id == employeeIDValue){
             let removedEmployee = currentEmployees.splice(i, 1);
